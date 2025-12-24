@@ -1,4 +1,5 @@
 # System Architecture:
+
 ## System Architecture Diagram
 The system follows a typical three-tier architecture consisting of a frontend, backend, and database.
 
