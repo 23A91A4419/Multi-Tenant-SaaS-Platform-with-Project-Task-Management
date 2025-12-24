@@ -1,4 +1,4 @@
-# Product Requirements Document (PRD)
+# Product Requirements Document (PRD):
 ## User Personas
 ### Super Admin
 
