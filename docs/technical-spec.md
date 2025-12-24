@@ -1,4 +1,5 @@
-# Technical Specification
+# Technical Specification:
+
 ## Project Structure
 The project is organized into separate backend and frontend directories to maintain a clear separation of concerns.
 
