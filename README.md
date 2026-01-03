@@ -9,7 +9,7 @@ This project demonstrates real-world SaaS architecture using multi-tenancy, JWT 
 🎥 Demo Video
 A complete walkthrough of the Multi-Tenant SaaS Platform, including features, architecture, and functionality, is available in the demo video below:
 
-▶️ https://youtu.be/l2O9fZi4UwE
+▶️ https://www.youtube.com/watch?v=ZnKIOitccmQ
 
 
 🎯 Objective
