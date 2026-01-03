@@ -273,13 +273,20 @@ const updateTaskStatus = async (req, res) => {
   }
 };
 /**
- * API 19: Update Task
+ * API 19: Update Task (FULL FIX)
  */
 const updateTask = async (req, res) => {
   const { projectId, taskId } = req.params;
   const { tenantId } = req.user;
 
-  const { title, description, priority, assignedTo, dueDate } = req.body;
+  const {
+    title,
+    description,
+    priority,
+    status,        // ✅ ADD THIS
+    assignedTo,
+    dueDate,
+  } = req.body;
 
   try {
     // 1️⃣ Check task exists & belongs to tenant & project
@@ -319,6 +326,21 @@ const updateTask = async (req, res) => {
       values.push(priority);
     }
 
+    // ✅ THIS IS THE MISSING PART (STATUS FIX)
+    if (status !== undefined) {
+      const allowedStatuses = ['todo', 'in_progress', 'completed'];
+
+      if (!allowedStatuses.includes(status)) {
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid status value',
+        });
+      }
+
+      fields.push(`status = $${index++}`);
+      values.push(status);
+    }
+
     if (assignedTo !== undefined) {
       fields.push(`assigned_to = $${index++}`);
       values.push(assignedTo);
@@ -335,6 +357,7 @@ const updateTask = async (req, res) => {
         message: 'No fields provided for update',
       });
     }
+
 
     const updateResult = await pool.query(
       `
@@ -369,9 +392,54 @@ const updateTask = async (req, res) => {
     });
   }
 };
+/**
+ * API 20: Delete Task
+ */
+const deleteTask = async (req, res) => {
+  const { projectId, taskId } = req.params;
+  const { tenantId } = req.user;
+
+  try {
+    // Verify task belongs to tenant & project
+    const taskResult = await pool.query(
+      `
+      SELECT id 
+      FROM tasks
+      WHERE id = $1 AND project_id = $2 AND tenant_id = $3
+      `,
+      [taskId, projectId, tenantId]
+    );
+
+    if (taskResult.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Task not found',
+      });
+    }
+
+    // Delete task
+    await pool.query(
+      `DELETE FROM tasks WHERE id = $1`,
+      [taskId]
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: 'Task deleted successfully',
+    });
+  } catch (error) {
+    console.error('DELETE TASK ERROR:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to delete task',
+    });
+  }
+};
+
 module.exports = {
   createTask,
   listTasks,
   updateTaskStatus,
   updateTask,
+  deleteTask,
 };

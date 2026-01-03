@@ -1,16 +1,16 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
+
+const SECRET = process.env.JWT_SECRET || "fallback_test_secret_key_32_chars_long";
 
 const generateToken = (payload) => {
-  return jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN || '24h',
-  });
+  return jwt.sign(payload, SECRET, { expiresIn: "24h" });
 };
 
 const verifyToken = (token) => {
-  return jwt.verify(token, process.env.JWT_SECRET);
+  return jwt.verify(token, SECRET);
 };
 
 module.exports = {
   generateToken,
-  verifyToken,
+  verifyToken
 };

@@ -5,7 +5,8 @@ const {
   createTask,
   listTasks,
   updateTaskStatus,
-  updateTask
+  updateTask,
+  deleteTask
 } = require('../controllers/taskController');
 
 const authMiddleware = require('../middleware/authMiddleware');
@@ -21,5 +22,7 @@ router.patch('/:taskId/status', authMiddleware, updateTaskStatus);
 
 // API 19: Update Task
 router.put('/:taskId', authMiddleware, updateTask);
+
+router.delete('/:taskId', authMiddleware, deleteTask);
 
 module.exports = router;

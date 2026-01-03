@@ -5,16 +5,22 @@ const pool = require('../config/db');
  */
 const updateUser = async (req, res) => {
   const { userId } = req.params;
+
   const {
     userId: requesterId,
     tenantId: requesterTenantId,
     role: requesterRole
   } = req.user;
 
-  const { fullName, role, isActive } = req.body;
+  let { fullName, role, isActive, status } = req.body;
+
+  // Normalize status → isActive
+  if (status !== undefined) {
+    isActive = status === 'active';
+  }
 
   try {
-    // Get target user
+    // 🔍 Fetch target user
     const userResult = await pool.query(
       `SELECT id, tenant_id, role FROM users WHERE id = $1`,
       [userId]
@@ -29,7 +35,7 @@ const updateUser = async (req, res) => {
 
     const targetUser = userResult.rows[0];
 
-    // Must belong to same tenant
+    // ❌ Cross-tenant access blocked
     if (targetUser.tenant_id !== requesterTenantId) {
       return res.status(403).json({
         success: false,
@@ -39,7 +45,7 @@ const updateUser = async (req, res) => {
 
     const isSelf = requesterId === userId;
 
-    // Self user restrictions
+    // 🚫 Self restrictions
     if (isSelf && (role !== undefined || isActive !== undefined)) {
       return res.status(403).json({
         success: false,
@@ -47,7 +53,7 @@ const updateUser = async (req, res) => {
       });
     }
 
-    // Non-admin trying to update others
+    // 🚫 Only tenant_admin can edit others
     if (!isSelf && requesterRole !== 'tenant_admin') {
       return res.status(403).json({
         success: false,
@@ -55,7 +61,7 @@ const updateUser = async (req, res) => {
       });
     }
 
-    // Build update query
+    // 🔧 Build update query
     const fields = [];
     const values = [];
     let index = 1;
@@ -70,6 +76,7 @@ const updateUser = async (req, res) => {
         fields.push(`role = $${index++}`);
         values.push(role);
       }
+
       if (isActive !== undefined) {
         fields.push(`is_active = $${index++}`);
         values.push(isActive);
@@ -83,6 +90,7 @@ const updateUser = async (req, res) => {
       });
     }
 
+    // ✅ Update user
     const updateResult = await pool.query(
       `
       UPDATE users
@@ -102,10 +110,12 @@ const updateUser = async (req, res) => {
         id: updatedUser.id,
         fullName: updatedUser.full_name,
         role: updatedUser.role,
+        status: updatedUser.is_active ? 'active' : 'inactive',
         isActive: updatedUser.is_active,
         updatedAt: updatedUser.updated_at,
       },
     });
+
   } catch (error) {
     console.error('UPDATE USER ERROR:', error);
 
@@ -115,6 +125,7 @@ const updateUser = async (req, res) => {
     });
   }
 };
+
 
 /**
  * API 11: Delete User

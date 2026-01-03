@@ -9,7 +9,7 @@ const {
 } = require('../controllers/projectController');
 
 const authMiddleware = require('../middleware/authMiddleware');
-const taskRoutes = require('./taskRoutes'); 
+const taskRoutes = require('./taskRoutes'); // ✅ REQUIRED IMPORT
 
 // API 12: Create Project
 router.post('/', authMiddleware, createProject);

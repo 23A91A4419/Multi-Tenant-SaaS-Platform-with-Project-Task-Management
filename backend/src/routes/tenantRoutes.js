@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 const {
   getTenantDetails,
   updateTenant,
@@ -19,15 +20,10 @@ router.put('/:tenantId', authMiddleware, updateTenant);
 // API 7
 router.get('/', authMiddleware, listAllTenants);
 
-
-
 // API 8
 router.post('/:tenantId/users', authMiddleware, addUserToTenant);
 
 
-
 // API 9
 router.get('/:tenantId/users', authMiddleware, listTenantUsers);
-
-
 module.exports = router;
