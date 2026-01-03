@@ -22,6 +22,7 @@ Error:
   "message": "Error description"
 }
 
+
 Authentication:
 All protected APIs require:
 Authorization: Bearer <JWT_TOKEN>
