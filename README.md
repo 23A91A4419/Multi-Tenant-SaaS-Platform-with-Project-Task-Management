@@ -1,15 +1,18 @@
 📘 Multi-Tenant SaaS Platform
 
+
 🧩 Project Description
 
 Multi-Tenant SaaS Platform is a full-stack web application designed to support multiple organizations (tenants) within a single system. Each tenant operates in complete isolation while sharing a common infrastructure.
 
 This project demonstrates real-world SaaS architecture using multi-tenancy, JWT authentication, role-based access control, and Dockerized deployment.
 
+
 🎥 Demo Video
 A complete walkthrough of the Multi-Tenant SaaS Platform, including features, architecture, and functionality, is available in the demo video below:
 
 ▶️ https://www.youtube.com/watch?v=ZnKIOitccmQ
+
 
 
 🎯 Objective
@@ -50,6 +53,7 @@ Fully Dockerized frontend, backend, and database
 
 Backend health check endpoint
 
+
 🛠 Technology Stack
 
 Frontend
@@ -70,6 +74,7 @@ PostgreSQL 15
 Containerization
 Docker
 Docker Compose
+
 
 🏗 Architecture Overview
 
