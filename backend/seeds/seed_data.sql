@@ -1,14 +1,18 @@
 -- TENANT
-INSERT INTO tenants (id, name, subdomain, status, subscription_plan, max_users, max_projects)
+INSERT INTO tenants (
+  id, name, subdomain, status, subscription_plan, max_users, max_projects
+)
 VALUES (
-  '22222222-2222-2222-2222-222222222222',
-  'Demo Company',
+  '11111111-1111-1111-1111-111111111111',
+  'Demo Org',
   'demo',
   'active',
-  'pro',
-  25,
-  15
-);
+  'free',
+  10,
+  5
+)
+ON CONFLICT DO NOTHING;
+
 
 -- SUPER ADMIN (password: Admin@123)
 INSERT INTO users (id, tenant_id, email, password_hash, full_name, role)
@@ -19,7 +23,9 @@ VALUES (
   '$2b$10$jbyl7qUGLJF.n2guLnPy8.jmZbtkaFPtnqd3dijrprZd.9QrvmdFS',
   'System Admin',
   'super_admin'
-);
+)
+ON CONFLICT DO NOTHING;
+
 
 -- TENANT ADMIN (password: Demo@123)
 INSERT INTO users (id, tenant_id, email, password_hash, full_name, role)
@@ -30,7 +36,9 @@ VALUES (
   '$2b$10$zvNFacNg1dhYNRbRU.q8jOkUum8lp2uIvpV0lzQpSK679upsXNO7W',
   'Demo Admin',
   'tenant_admin'
-);
+)
+ON CONFLICT DO NOTHING;
+
 
 -- USER 1 (password: User@123)
 INSERT INTO users (id, tenant_id, email, password_hash, full_name, role)
@@ -41,7 +49,9 @@ VALUES (
   '$2b$10$D2YLAKASixyPhXp9fzo4su78yh/ffjGPVYdSTGyz7Nq3oKYjyOrBO',
   'Demo User One',
   'user'
-);
+)
+ON CONFLICT DO NOTHING;
+
 
 -- USER 2 (password: User@123)
 INSERT INTO users (id, tenant_id, email, password_hash, full_name, role)
@@ -52,7 +62,9 @@ VALUES (
   '$2b$10$D2YLAKASixyPhXp9fzo4su78yh/ffjGPVYdSTGyz7Nq3oKYjyOrBO',
   'Demo User Two',
   'user'
-);
+)
+ON CONFLICT DO NOTHING;
+
 
 -- PROJECTS
 INSERT INTO projects (id, tenant_id, name, description, created_by)
@@ -70,7 +82,10 @@ VALUES
   'Project Beta',
   'Second demo project',
   '33333333-3333-3333-3333-333333333333'
-);
+)
+ON CONFLICT DO NOTHING;
+
+
 
 -- TASKS (5 tasks across 2 projects)
 INSERT INTO tasks (id, project_id, tenant_id, title, status, priority)
@@ -114,4 +129,6 @@ VALUES
   'Deployment',
   'todo',
   'medium'
-);
+)
+ON CONFLICT DO NOTHING;
+

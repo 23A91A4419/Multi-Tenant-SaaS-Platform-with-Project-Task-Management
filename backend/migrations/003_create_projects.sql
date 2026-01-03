@@ -1,4 +1,4 @@
-CREATE TABLE projects (
+CREATE TABLE IF NOT EXISTS projects  (
     id UUID PRIMARY KEY,
     tenant_id UUID NOT NULL,
     name VARCHAR(255) NOT NULL,
@@ -13,4 +13,5 @@ CREATE TABLE projects (
         REFERENCES users(id) ON DELETE SET NULL
 );
 
-CREATE INDEX idx_projects_tenant ON projects(tenant_id);
+CREATE INDEX IF NOT EXISTS idx_projects_tenant
+ON projects (tenant_id);
