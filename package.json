@@ -1,0 +1,30 @@
+{
+  "name": "multi-tenant-saas-platform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/23A91A4419/Multi-Tenant-SaaS-Platform.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/23A91A4419/Multi-Tenant-SaaS-Platform/issues"
+  },
+  "homepage": "https://github.com/23A91A4419/Multi-Tenant-SaaS-Platform#readme",
+  "dependencies": {
+    "axios": "^1.13.2",
+    "bcrypt": "^6.0.0",
+    "jwt-decode": "^4.0.0",
+    "react-router-dom": "^7.11.0"
+  }
+}
