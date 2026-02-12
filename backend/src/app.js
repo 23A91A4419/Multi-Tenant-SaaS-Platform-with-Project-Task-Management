@@ -17,7 +17,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/tenants', require('./routes/tenantRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/projects', require('./routes/projectRoutes'));
-app.use('/api', require('./routes/taskRoutes'));
+// app.use('/api', require('./routes/taskRoutes')); // Removed duplicate mount - tasks are nested under projects
 
 
 const pool = require('./config/db');

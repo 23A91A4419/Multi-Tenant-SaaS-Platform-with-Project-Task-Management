@@ -1,4 +1,5 @@
 const pool = require('../config/db');
+const { logAction } = require('../services/auditService');
 
 /**
  * API 5: Get Tenant Details
@@ -45,7 +46,7 @@ const getTenantDetails = async (req, res) => {
         [tenantId]
       );
       totalUsers = Number(usersCount.rows[0].count);
-    } catch (e) {}
+    } catch (e) { }
 
     try {
       const projectsCount = await pool.query(
@@ -53,7 +54,7 @@ const getTenantDetails = async (req, res) => {
         [tenantId]
       );
       totalProjects = Number(projectsCount.rows[0].count);
-    } catch (e) {}
+    } catch (e) { }
 
     try {
       const tasksCount = await pool.query(
@@ -61,7 +62,7 @@ const getTenantDetails = async (req, res) => {
         [tenantId]
       );
       totalTasks = Number(tasksCount.rows[0].count);
-    } catch (e) {}
+    } catch (e) { }
 
     return res.status(200).json({
       success: true,
@@ -180,6 +181,18 @@ const updateTenant = async (req, res) => {
         message: 'Tenant not found',
       });
     }
+
+
+
+    // Audit Log
+    await logAction(
+      tenantId, // Target tenant
+      req.user.userId, // Actor
+      'UPDATE_TENANT',
+      'tenant',
+      tenantId,
+      req.ip
+    );
 
     return res.status(200).json({
       success: true,
@@ -386,6 +399,18 @@ const addUserToTenant = async (req, res) => {
     );
 
     const user = insertResult.rows[0];
+
+
+
+    // Audit Log
+    await logAction(
+      tenantId,
+      req.user.userId,
+      'CREATE_USER',
+      'user',
+      user.id,
+      req.ip
+    );
 
     return res.status(201).json({
       success: true,

@@ -1,9 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const pool = require('../config/db');
-
-/**
- * API 16: Create Task
- */
+const { logAction } = require('../services/auditService');
 
 /**
  * API 16: Create Task
@@ -84,6 +81,16 @@ const createTask = async (req, res) => {
     );
 
     const task = result.rows[0];
+
+    // Audit Log
+    await logAction(
+      task.tenant_id,
+      req.user.userId,
+      'CREATE_TASK',
+      'task',
+      task.id,
+      req.ip
+    );
 
     return res.status(201).json({
       success: true,
@@ -233,6 +240,7 @@ const listTasks = async (req, res) => {
     });
   }
 };
+
 /**
  * API 18: Update Task Status
  */
@@ -293,8 +301,9 @@ const updateTaskStatus = async (req, res) => {
     });
   }
 };
+
 /**
- * API 19: Update Task (FULL FIX)
+ * API 19: Update Task
  */
 const updateTask = async (req, res) => {
   const { projectId, taskId } = req.params;
@@ -304,7 +313,7 @@ const updateTask = async (req, res) => {
     title,
     description,
     priority,
-    status,        // ✅ ADD THIS
+    status,
     assignedTo,
     dueDate,
   } = req.body;
@@ -347,7 +356,6 @@ const updateTask = async (req, res) => {
       values.push(priority);
     }
 
-    // ✅ THIS IS THE MISSING PART (STATUS FIX)
     if (status !== undefined) {
       const allowedStatuses = ['todo', 'in_progress', 'completed'];
 
@@ -379,7 +387,6 @@ const updateTask = async (req, res) => {
       });
     }
 
-
     const updateResult = await pool.query(
       `
       UPDATE tasks
@@ -391,6 +398,16 @@ const updateTask = async (req, res) => {
     );
 
     const task = updateResult.rows[0];
+
+    // Audit Log
+    await logAction(
+      tenantId,
+      req.user.userId,
+      'UPDATE_TASK',
+      'task',
+      taskId,
+      req.ip
+    );
 
     return res.status(200).json({
       success: true,
@@ -413,6 +430,7 @@ const updateTask = async (req, res) => {
     });
   }
 };
+
 /**
  * API 20: Delete Task
  */
@@ -442,6 +460,16 @@ const deleteTask = async (req, res) => {
     await pool.query(
       `DELETE FROM tasks WHERE id = $1`,
       [taskId]
+    );
+
+    // Audit Log
+    await logAction(
+      tenantId,
+      req.user.userId,
+      'DELETE_TASK',
+      'task',
+      taskId,
+      req.ip
     );
 
     return res.status(200).json({

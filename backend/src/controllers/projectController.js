@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const pool = require('../config/db');
+const { logAction } = require('../services/auditService');
 
 /**
  * API 12: Create Project
@@ -72,6 +73,16 @@ const createProject = async (req, res) => {
     );
 
     const project = result.rows[0];
+
+    // Audit Log
+    await logAction(
+      targetTenantId,
+      creatorId,
+      'CREATE_PROJECT',
+      'project',
+      project.id,
+      req.ip
+    );
 
     return res.status(201).json({
       success: true,
@@ -288,6 +299,16 @@ const updateProject = async (req, res) => {
 
     const updatedProject = updateResult.rows[0];
 
+    // Audit Log
+    await logAction(
+      project.tenant_id,
+      userId,
+      'UPDATE_PROJECT',
+      'project',
+      projectId,
+      req.ip
+    );
+
     return res.status(200).json({
       success: true,
       message: 'Project updated successfully',
@@ -352,6 +373,16 @@ const deleteProject = async (req, res) => {
     await pool.query(
       `DELETE FROM projects WHERE id = $1`,
       [projectId]
+    );
+
+    // Audit Log
+    await logAction(
+      project.tenant_id,
+      userId,
+      'DELETE_PROJECT',
+      'project',
+      projectId,
+      req.ip
     );
 
     return res.status(200).json({

@@ -1,4 +1,5 @@
 const pool = require('../config/db');
+const { logAction } = require('../services/auditService');
 
 /**
  * API 10: Update User
@@ -95,6 +96,18 @@ const updateUser = async (req, res) => {
 
     const updatedUser = updateResult.rows[0];
 
+
+
+    // Audit Log
+    await logAction(
+      targetUser.tenant_id,
+      requesterId,
+      'UPDATE_USER',
+      'user',
+      userId,
+      req.ip
+    );
+
     return res.status(200).json({
       success: true,
       message: 'User updated successfully',
@@ -171,6 +184,18 @@ const deleteUser = async (req, res) => {
     await pool.query(
       `DELETE FROM users WHERE id = $1`,
       [userId]
+    );
+
+
+
+    // Audit Log
+    await logAction(
+      targetUser.tenant_id,
+      requesterId,
+      'DELETE_USER',
+      'user',
+      userId,
+      req.ip
     );
 
     return res.status(200).json({

@@ -1,0 +1,206 @@
+###AP1 1 – Register Tenant
+POST http://localhost:5000/api/auth/register-tenant
+Content-Type: application/json
+
+{
+  "tenantName": "Demo Company",
+  "subdomain": "demo",
+  "adminEmail": "admin@demo.com",
+  "adminPassword": "Demo@123",
+  "adminFullName": "Demo Admin"
+}
+
+### API 2 – Login
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@demo.com",
+  "password": "Demo@123",
+  "tenantSubdomain": "demo"
+}
+
+### API 3 – Get Current User
+GET http://localhost:5000/api/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+
+### API 4 – Logout
+POST http://localhost:5000/api/auth/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+
+
+### API 5 – Get Tenant Details
+GET http://localhost:5000/api/tenants/d68422c8-fdf3-4921-8d82-cb1823f5b83b
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+
+### API 6 – Update Tenant
+
+PUT http://localhost:5000/api/tenants/d68422c8-fdf3-4921-8d82-cb1823f5b83b
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+Content-Type: application/json
+
+{
+  "name": "Updated Company Name"
+}
+
+### API 6 – Test 2 (tenant_admin forbidden fields)
+PUT http://localhost:5000/api/tenants/d68422c8-fdf3-4921-8d82-cb1823f5b83b
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+Content-Type: application/json
+
+{
+  "maxUsers": 50
+}
+
+### API 7 – List All Tenants
+GET http://localhost:5000/api/tenants
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+
+### API 8 – Add User to Tenant
+POST http://localhost:5000/api/tenants/d68422c8-fdf3-4921-8d82-cb1823f5b83b/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+Content-Type: application/json
+
+{
+  "email": "newuser@demo.com",
+  "password": "NewUser@123",
+  "fullName": "New User",
+  "role": "user"
+}
+
+### API 9 – List Tenant Users
+GET http://localhost:5000/api/tenants/d68422c8-fdf3-4921-8d82-cb1823f5b83b/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+
+### API 10 – Update User
+PUT http://localhost:5000/api/users/1b75c01f-99ad-4d7b-aa11-ac1d9fec69bd
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+Content-Type: application/json
+
+{
+  "fullName": "Updated User Name"
+}
+
+### API 10 – TEST 2 (Correct)
+PUT http://localhost:5000/api/users/eb98bcb2-09e2-4fdd-acd4-114c26620508
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+Content-Type: application/json
+
+{
+  "role": "tenant_admin"
+}
+
+### API 10 – TEST 3 (ADMIN changing isActive)
+PUT http://localhost:5000/api/users/1b75c01f-99ad-4d7b-aa11-ac1d9fec69bd
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+Content-Type: application/json
+
+{
+  "isActive": false
+}
+
+### API 11 – Delete User
+DELETE http://localhost:5000/api/users/1b75c01f-99ad-4d7b-aa11-ac1d9fec69bd
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+
+### API 11 – TEST 2 (Correct)
+DELETE http://localhost:5000/api/users/eb98bcb2-09e2-4fdd-acd4-114c26620508
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+
+### API 11 – TEST 3 (Normal User forbidden)
+DELETE http://localhost:5000/api/users/eb98bcb2-09e2-4fdd-acd4-114c26620508
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+
+### API 12 – Create Project
+POST http://localhost:5000/api/projects
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+Content-Type: application/json
+
+{
+  "name": "Website Redesign Project",
+  "description": "Complete redesign of company website"
+}
+
+### API 13 – List Projects
+GET http://localhost:5000/api/projects
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+
+### API 13 – List Projects with Status Filter
+GET http://localhost:5000/api/projects?status=active
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+
+### API 13 – List Projects with Search Filter
+GET http://localhost:5000/api/projects?search=Website
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+
+### API 13 – List Projects with Pagination
+GET http://localhost:5000/api/projects?page=1&limit=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+
+### API 14 – Update Project
+PUT http://localhost:5000/api/projects/6359c8af-1727-4168-9af3-67c9f06e08b0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+Content-Type: application/json
+
+{
+  "name": "Updated Project Name",
+  "description": "Updated description"
+}
+
+### API 14 – Update Project Status Only
+PUT http://localhost:5000/api/projects/6359c8af-1727-4168-9af3-67c9f06e08b0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+Content-Type: application/json
+
+{
+  "status": "archived"
+}
+
+### API 15 – Delete Project
+DELETE http://localhost:5000/api/projects/6359c8af-1727-4168-9af3-67c9f06e08b0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+
+### API 15 – Delete Project (Admin User)
+GET http://localhost:5000/api/projects
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+
+### API 16 – Create Task in Project
+POST http://localhost:5000/api/projects/1fc478b9-7d4c-44fb-8899-8dffa08c6e11/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+Content-Type: application/json
+
+{
+  "title": "Design homepage mockup",
+  "description": "Create high-fidelity design",
+  "assignedTo": "eb98bcb2-09e2-4fdd-acd4-114c26620508",
+  "priority": "high",
+  "dueDate": "2024-07-15"
+}
+
+### API 17 – List Tasks
+GET http://localhost:5000/api/projects/1fc478b9-7d4c-44fb-8899-8dffa08c6e11/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+
+### API 18 – Update Task Status
+PATCH http://localhost:5000/api/projects/1fc478b9-7d4c-44fb-8899-8dffa08c6e11/tasks/9383cb64-13e1-44d2-bc0a-b7c878c5f1de/status
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+Content-Type: application/json
+
+{
+  "status": "in_progress"
+}
+
+### API 19 – Update Task Details
+PUT http://localhost:5000/api/projects/1fc478b9-7d4c-44fb-8899-8dffa08c6e11/tasks/9383cb64-13e1-44d2-bc0a-b7c878c5f1de
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY2NDMyNDksImV4cCI6MTc2NjcyOTY0OX0.14fjMrrHbL2Nj3BWgcGf_5QjbFh6bbS8W7phvkCgiBI
+Content-Type: application/json
+
+{
+  "title": "Updated task title",
+  "priority": "low"
+}
+
+### API 20 –  Task
+GET http://localhost:5000/api/projects
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjk4YmNiMi0wOWUyLTRmZGQtYWNkNC0xMTRjMjY2MjA1MDgiLCJ0ZW5hbnRJZCI6ImQ2ODQyMmM4LWZkZjMtNDkyMS04ZDgyLWNiMTgyM2Y1YjgzYiIsInJvbGUiOiJ0ZW5hbnRfYWRtaW4iLCJpYXQiOjE3NjY3NDQzMDAsImV4cCI6MTc2NjgzMDcwMH0.cyFFtF1lZuZMOpVpd6cL03tuhPdiNLv0FuwN_l7i0ZY
+

@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 const pool = require('../config/db');
 const { generateToken } = require('../utils/jwt');
+const { logAction } = require('../services/auditService');
 
 /**
  * API 1: Register Tenant
@@ -52,6 +53,16 @@ const registerTenant = async (req, res) => {
     );
 
     await client.query('COMMIT');
+
+    // Audit Log
+    await logAction(
+      tenantId,
+      adminId,
+      'REGISTER_TENANT',
+      'tenant',
+      tenantId,
+      req.ip
+    );
 
     return res.status(201).json({
       success: true,
@@ -181,6 +192,16 @@ const login = async (req, res) => {
       tenantId: user.tenant_id,
       role: user.role,
     });
+
+    // Audit Log
+    await logAction(
+      user.tenant_id,
+      user.id,
+      'LOGIN',
+      'user',
+      user.id,
+      req.ip
+    );
 
     return res.status(200).json({
       success: true,
