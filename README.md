@@ -91,18 +91,6 @@ Each request is authenticated using JWT and automatically scoped to the tenant u
 
 ---
 
-## 📦 Subscription Plans
-
-| Plan       | Max Users | Max Projects |
-|------------|----------|-------------|
-| Free       | 5        | 3           |
-| Pro        | 25       | 15          |
-| Enterprise | 100      | 50          |
-
-APIs enforce subscription limits before resource creation.
-
----
-
 ## 🗄 Database Schema
 
 Core Tables:
